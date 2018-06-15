@@ -1,0 +1,40 @@
+{
+  "name": "s5-azure-func-js-util",
+  "version": "0.0.1",
+  "description": "Azure Javascript Functions Utilities",
+  "main": "index.js",
+  "scripts": {
+    "test-unit": "jest",
+    "test": "NODE_ENV=test npm run check && npm run test-unit",
+    "check": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reggiepangilinan-s5/s5-azure-func-js-util.git"
+  },
+  "keywords": [
+    "azure",
+    "azure-functions",
+    "azure-app-service",
+    "serverless",
+    "microsoft",
+    "stationfive"
+  ],
+  "author": "StationFive",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reggiepangilinan-s5/s5-azure-func-js-util/issues"
+  },
+  "homepage": "https://github.com/reggiepangilinan-s5/s5-azure-func-js-util#readme",
+  "dependencies": {
+    "lodash": "4.17.10",
+    "node-http-error-objects": "3.0.1"
+  },
+  "devDependencies": {
+    "jest": "23.1.0",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-jest": "21.17.0"
+  }
+}
