@@ -1,5 +1,5 @@
 {
-  "name": "s5-azure-func-js-util",
+  "name": "@stationfive/azure-func-js-util",
   "version": "0.0.1",
   "description": "Azure Javascript Functions Utilities",
   "main": "index.js",
