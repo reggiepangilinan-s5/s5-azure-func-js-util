@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/constants/index.js"],"names":["httpMethods","require","module","exports"],"mappings":";;AACA,IAAMA,cAAcC,wBAApB;;AAEAC,OAAOC,OAAP,GAAiB;AACfH;AADe,CAAjB","file":"index.js","sourcesContent":["\nconst httpMethods = require('./httpMethods');\n\nmodule.exports = {\n  httpMethods,\n};\n"]}

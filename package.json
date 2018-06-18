@@ -2,15 +2,20 @@
   "name": "@stationfive/azure-func-js-util",
   "version": "0.0.3",
   "description": "Azure Javascript Functions Utilities",
-  "main": "dist/index.js",
+  "main": "index.js",
   "files": [
-    "dist/**"
+    "constants/**",
+    "handlers/**",
+    "messages/**",
+    "validations/**",
+    "index.js",
+    "index.js.map"
   ],
   "scripts": {
     "test-unit": "jest ./src",
     "test": "NODE_ENV=test npm run check && npm run test-unit",
     "check": "eslint ./src",
-    "build": "babel src -s -D -d dist --presets env"
+    "build": "babel src -s -D -d . --presets env"
   },
   "repository": {
     "type": "git",

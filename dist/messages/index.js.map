@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/messages/index.js"],"names":["server","require","module","exports"],"mappings":";;AAAA,IAAMA,SAASC,mBAAf;;AAEAC,OAAOC,OAAP,GAAiB;AACfH;AADe,CAAjB","file":"index.js","sourcesContent":["const server = require('./server');\n\nmodule.exports = {\n  server,\n};\n\n"]}
