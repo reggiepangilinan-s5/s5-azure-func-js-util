@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "Azure Javascript Functions Utilities",
   "files": [
-    "dist"
+    "dist/**"
   ],
   "scripts": {
     "test-unit": "jest ./src",
