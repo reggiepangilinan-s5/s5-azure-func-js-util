@@ -2,7 +2,7 @@
   "name": "@stationfive/azure-func-js-util",
   "version": "0.0.3",
   "description": "Azure Javascript Functions Utilities",
-  "main": "dist",
+  "main": "dist/index.js",
   "files": [
     "dist/**"
   ],
