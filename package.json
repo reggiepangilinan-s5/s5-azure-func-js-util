@@ -15,7 +15,8 @@
     "test-unit": "jest ./src",
     "test": "NODE_ENV=test npm run check && npm run test-unit",
     "check": "eslint ./src",
-    "build": "babel src -s -D -d . --presets env"
+    "build": "babel src -s -D -d . --presets env",
+    "publish": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
