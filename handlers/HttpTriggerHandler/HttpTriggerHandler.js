@@ -135,7 +135,7 @@ var HttpTriggerHandler = function () {
 
                 case 15:
                   result = _context.sent;
-                  return _context.abrupt('return', toHttpResponse(JSON.parse((0, _stringify2.default)(result)), httpStatusCodes.Ok));
+                  return _context.abrupt('return', toHttpResponse((0, _stringify2.default)(result), httpStatusCodes.Ok));
 
                 case 19:
                   _context.prev = 19;

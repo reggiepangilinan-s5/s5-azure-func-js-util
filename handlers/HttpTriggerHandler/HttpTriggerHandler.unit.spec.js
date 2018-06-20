@@ -48,7 +48,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
 
           case 5:
             result = _context.sent;
-            actual = result.body;
+            actual = JSON.parse(result.body);
             expected = true;
 
             expect(mockFunction.mock.calls.length).toBe(1);
@@ -131,7 +131,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
 
           case 5:
             result = _context4.sent;
-            actual = result.body;
+            actual = JSON.parse(result.body);
             expected = true;
 
             expect(mockFunction.mock.calls.length).toBe(1);
@@ -190,7 +190,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
 
           case 5:
             result = _context6.sent;
-            actual = result.body;
+            actual = JSON.parse(result.body);
             expected = true;
 
             expect(mockFunction.mock.calls.length).toBe(1);
