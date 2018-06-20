@@ -26,7 +26,8 @@ describe('utils/handlers/HttpTriggerHandler', () => {
     const mockFunction = jest.fn();
     mockFunction.mockReturnValue(true);
     const handler = new HttpTriggerHandler().setHttpMethod(httpMethods.GET).listen(mockFunction);
-    const actual = await handler(fakeContext, fakeRequest);
+    const result = await handler(fakeContext, fakeRequest);
+    const actual = result.body;
     const expected = true;
     expect(mockFunction.mock.calls.length).toBe(1);
     expect(mockFunction).toBeCalledWith(fakeContext, fakeRequest);
@@ -36,7 +37,7 @@ describe('utils/handlers/HttpTriggerHandler', () => {
     const mockFunction = jest.fn();
     const handler = new HttpTriggerHandler().listen(mockFunction);
     const result = await handler(fakeContext, fakeRequest);
-    const actual = result.errorCode;
+    const actual = result.status;
     const expected = 400;
     expect(mockFunction.mock.calls.length).toBe(0);
     expect(actual).toBe(expected);
@@ -46,7 +47,7 @@ describe('utils/handlers/HttpTriggerHandler', () => {
     const mockFunction = jest.fn();
     const handler = new HttpTriggerHandler().setHttpMethod(httpMethods.POST).listen(mockFunction);
     const result = await handler(fakeContext, fakeRequest);
-    const actual = result.errorCode;
+    const actual = result.status;
     const expected = 400;
     expect(mockFunction.mock.calls.length).toBe(0);
     expect(actual).toBe(expected);
@@ -59,7 +60,8 @@ describe('utils/handlers/HttpTriggerHandler', () => {
       .setHttpMethod(httpMethods.GET)
       .setQueryParamsDefinition(fakeQueryRequiredParamsDefs)
       .listen(mockFunction);
-    const actual = await handler(fakeContext, fakeRequestWithQueryParams);
+    const result = await handler(fakeContext, fakeRequestWithQueryParams);
+    const actual = result.body;
     const expected = true;
     expect(mockFunction.mock.calls.length).toBe(1);
     expect(mockFunction).toBeCalledWith(fakeContext, fakeRequestWithQueryParams);
@@ -74,7 +76,7 @@ describe('utils/handlers/HttpTriggerHandler', () => {
       .setQueryParamsDefinition(fakeQueryRequiredParamsDefs)
       .listen(mockFunction);
     const result = await handler(fakeContext, fakeRequest);
-    const actual = result.errorCode;
+    const actual = result.status;
     const expected = 400;
     expect(mockFunction.mock.calls.length).toBe(0);
     expect(actual).toBe(expected);
@@ -87,7 +89,8 @@ describe('utils/handlers/HttpTriggerHandler', () => {
       .setHttpMethod(httpMethods.GET)
       .setQueryParamsDefinition(fakeQueryParamsDefs)
       .listen(mockFunction);
-    const actual = await handler(fakeContext, fakeRequest);
+    const result = await handler(fakeContext, fakeRequest);
+    const actual = result.body;
     const expected = true;
     expect(mockFunction.mock.calls.length).toBe(1);
     expect(mockFunction).toBeCalledWith(fakeContext, fakeRequest);
