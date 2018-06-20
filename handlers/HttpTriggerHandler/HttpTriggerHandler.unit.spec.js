@@ -34,7 +34,7 @@ var fakeQueryParamsDefs = [queryParamDef('fakeParam', false)];
 
 describe('utils/handlers/HttpTriggerHandler', function () {
   test('Should execute function to be called once passing `context` and `req`', (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-    var mockFunction, handler, actual, expected;
+    var mockFunction, handler, result, actual, expected;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -47,14 +47,15 @@ describe('utils/handlers/HttpTriggerHandler', function () {
             return handler(fakeContext, fakeRequest);
 
           case 5:
-            actual = _context.sent;
+            result = _context.sent;
+            actual = result.body;
             expected = true;
 
             expect(mockFunction.mock.calls.length).toBe(1);
             expect(mockFunction).toBeCalledWith(fakeContext, fakeRequest);
             expect(actual).toBe(expected);
 
-          case 10:
+          case 11:
           case 'end':
             return _context.stop();
         }
@@ -74,7 +75,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
 
           case 4:
             result = _context2.sent;
-            actual = result.errorCode;
+            actual = result.status;
             expected = 400;
 
             expect(mockFunction.mock.calls.length).toBe(0);
@@ -101,7 +102,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
 
           case 4:
             result = _context3.sent;
-            actual = result.errorCode;
+            actual = result.status;
             expected = 400;
 
             expect(mockFunction.mock.calls.length).toBe(0);
@@ -116,7 +117,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
   })));
 
   test('Should execute function to be called with query parameter definitions', (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
-    var mockFunction, handler, actual, expected;
+    var mockFunction, handler, result, actual, expected;
     return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
@@ -129,14 +130,15 @@ describe('utils/handlers/HttpTriggerHandler', function () {
             return handler(fakeContext, fakeRequestWithQueryParams);
 
           case 5:
-            actual = _context4.sent;
+            result = _context4.sent;
+            actual = result.body;
             expected = true;
 
             expect(mockFunction.mock.calls.length).toBe(1);
             expect(mockFunction).toBeCalledWith(fakeContext, fakeRequestWithQueryParams);
             expect(actual).toBe(expected);
 
-          case 10:
+          case 11:
           case 'end':
             return _context4.stop();
         }
@@ -159,7 +161,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
 
           case 5:
             result = _context5.sent;
-            actual = result.errorCode;
+            actual = result.status;
             expected = 400;
 
             expect(mockFunction.mock.calls.length).toBe(0);
@@ -174,7 +176,7 @@ describe('utils/handlers/HttpTriggerHandler', function () {
   })));
 
   test('Should execute function query params definitions not required.', (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6() {
-    var mockFunction, handler, actual, expected;
+    var mockFunction, handler, result, actual, expected;
     return _regenerator2.default.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
@@ -187,14 +189,15 @@ describe('utils/handlers/HttpTriggerHandler', function () {
             return handler(fakeContext, fakeRequest);
 
           case 5:
-            actual = _context6.sent;
+            result = _context6.sent;
+            actual = result.body;
             expected = true;
 
             expect(mockFunction.mock.calls.length).toBe(1);
             expect(mockFunction).toBeCalledWith(fakeContext, fakeRequest);
             expect(actual).toBe(expected);
 
-          case 10:
+          case 11:
           case 'end':
             return _context6.stop();
         }

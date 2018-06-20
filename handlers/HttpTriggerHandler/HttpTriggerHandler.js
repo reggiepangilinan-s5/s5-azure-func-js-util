@@ -4,6 +4,10 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
@@ -29,6 +33,11 @@ var _require2 = require('../../validations'),
 
 var _require3 = require('../../validations'),
     validateRequestBody = _require3.validateRequestBody;
+
+var _require4 = require('../../constants'),
+    httpStatusCodes = _require4.httpStatusCodes;
+
+var toHttpResponse = require('./toHttpResponse');
 
 var HttpTriggerHandler = function () {
   function HttpTriggerHandler() {
@@ -67,7 +76,7 @@ var HttpTriggerHandler = function () {
       var handler = this;
       return function () {
         var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(context, req) {
-          var validationResult, _validationResult;
+          var validationResult, _validationResult, result;
 
           return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
@@ -80,7 +89,7 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', new errors.BadRequest(specfifyHttpMethod));
+                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(specfifyHttpMethod), httpStatusCodes.BadRequest));
 
                 case 3:
                   if (!(req.method !== handler.httpMethod)) {
@@ -88,7 +97,7 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', new errors.BadRequest(requestMethodShouldBe + handler.httpMethod));
+                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(requestMethodShouldBe + handler.httpMethod), httpStatusCodes.BadRequest));
 
                 case 5:
                   if (!handler.queryParamsDef) {
@@ -103,7 +112,7 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', new errors.BadRequest(validationResult.errors));
+                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(validationResult.errors), httpStatusCodes.BadRequest));
 
                 case 9:
                   if (!handler.requestBodyDef) {
@@ -118,26 +127,27 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', new errors.BadRequest(_validationResult.errors));
+                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(_validationResult.errors), httpStatusCodes.BadRequest));
 
                 case 13:
                   _context.next = 15;
                   return handler.mainFunction.call(handler.mainFunction, context, req);
 
                 case 15:
-                  return _context.abrupt('return', _context.sent);
+                  result = _context.sent;
+                  return _context.abrupt('return', toHttpResponse(JSON.parse((0, _stringify2.default)(result)), httpStatusCodes.Ok));
 
-                case 18:
-                  _context.prev = 18;
+                case 19:
+                  _context.prev = 19;
                   _context.t0 = _context['catch'](0);
-                  return _context.abrupt('return', new errors.InternalServerError({ exception: _context.t0.message, stack: _context.t0.stack }));
+                  return _context.abrupt('return', toHttpResponse(new errors.InternalServerError({ exception: _context.t0.message, stack: _context.t0.stack }), httpStatusCodes.InternalServerError));
 
-                case 21:
+                case 22:
                 case 'end':
                   return _context.stop();
               }
             }
-          }, _callee, _this, [[0, 18]]);
+          }, _callee, _this, [[0, 19]]);
         }));
 
         return function (_x, _x2) {
