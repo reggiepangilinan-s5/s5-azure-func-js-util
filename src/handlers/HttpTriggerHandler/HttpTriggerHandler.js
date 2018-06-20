@@ -61,7 +61,7 @@ class HttpTriggerHandler {
         }
         const result = await handler.mainFunction.call(handler.mainFunction, context, req);
         return toHttpResponse(
-          JSON.parse(JSON.stringify(result)),
+          JSON.stringify(result),
           httpStatusCodes.Ok,
         );
       } catch (error) {
