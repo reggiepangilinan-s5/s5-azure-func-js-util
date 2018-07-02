@@ -2,7 +2,7 @@ const defaultHeaders = {
   'content-type': 'application/json',
 };
 
-const toHttpResponse = (body, status, headers = defaultHeaders, returnResponse = false) => ({
+const toHttpResponse = (body, status, returnResponse = false, headers = defaultHeaders) => ({
   headers,
   status,
   body,
