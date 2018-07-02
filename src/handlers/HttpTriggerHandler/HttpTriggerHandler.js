@@ -1,9 +1,10 @@
-const errors = require('node-http-error-objects');
 const { requestMethodShouldBe, specfifyHttpMethod } = require('../../messages/server');
 const { validateQueryParams } = require('../../validations');
 const { validateRequestBody } = require('../../validations');
 const { httpStatusCodes } = require('../../constants');
 const toHttpResponse = require('./toHttpResponse');
+const badRequest = require('./response/badRequest');
+const internalServerError = require('./response/internalServerError');
 
 class HttpTriggerHandler {
   constructor() {
@@ -30,33 +31,21 @@ class HttpTriggerHandler {
     return async (context, req) => {
       try {
         if (!handler.httpMethod) {
-          return toHttpResponse(
-            new errors.BadRequest(specfifyHttpMethod),
-            httpStatusCodes.BadRequest,
-          );
+          return badRequest(specfifyHttpMethod);
         }
         if (req.method !== handler.httpMethod) {
-          return toHttpResponse(
-            new errors.BadRequest(requestMethodShouldBe + handler.httpMethod),
-            httpStatusCodes.BadRequest,
-          );
+          return badRequest(requestMethodShouldBe + handler.httpMethod);
         }
         if (handler.queryParamsDef) {
           const validationResult = validateQueryParams(req, handler.queryParamsDef);
           if (!validationResult.allValid) {
-            return toHttpResponse(
-              new errors.BadRequest(validationResult.errors),
-              httpStatusCodes.BadRequest,
-            );
+            return badRequest(validationResult.errors);
           }
         }
         if (handler.requestBodyDef) {
           const validationResult = validateRequestBody(req, handler.requestBodyDef);
           if (!validationResult.allValid) {
-            return toHttpResponse(
-              new errors.BadRequest(validationResult.errors),
-              httpStatusCodes.BadRequest,
-            );
+            return badRequest(validationResult.errors);
           }
         }
         const result = await handler.mainFunction.call(handler.mainFunction, context, req);
@@ -65,10 +54,7 @@ class HttpTriggerHandler {
           httpStatusCodes.Ok,
         );
       } catch (error) {
-        return toHttpResponse(
-          new errors.InternalServerError({ exception: error.message, stack: error.stack }),
-          httpStatusCodes.InternalServerError,
-        );
+        return internalServerError({ exception: error.message, stack: error.stack });
       }
     };
   }

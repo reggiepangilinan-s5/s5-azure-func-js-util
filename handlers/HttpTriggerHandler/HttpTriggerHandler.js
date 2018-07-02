@@ -22,8 +22,6 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var errors = require('node-http-error-objects');
-
 var _require = require('../../messages/server'),
     requestMethodShouldBe = _require.requestMethodShouldBe,
     specfifyHttpMethod = _require.specfifyHttpMethod;
@@ -38,6 +36,8 @@ var _require4 = require('../../constants'),
     httpStatusCodes = _require4.httpStatusCodes;
 
 var toHttpResponse = require('./toHttpResponse');
+var badRequest = require('./response/badRequest');
+var internalServerError = require('./response/internalServerError');
 
 var HttpTriggerHandler = function () {
   function HttpTriggerHandler() {
@@ -89,7 +89,7 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(specfifyHttpMethod), httpStatusCodes.BadRequest));
+                  return _context.abrupt('return', badRequest(specfifyHttpMethod));
 
                 case 3:
                   if (!(req.method !== handler.httpMethod)) {
@@ -97,7 +97,7 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(requestMethodShouldBe + handler.httpMethod), httpStatusCodes.BadRequest));
+                  return _context.abrupt('return', badRequest(requestMethodShouldBe + handler.httpMethod));
 
                 case 5:
                   if (!handler.queryParamsDef) {
@@ -112,7 +112,7 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(validationResult.errors), httpStatusCodes.BadRequest));
+                  return _context.abrupt('return', badRequest(validationResult.errors));
 
                 case 9:
                   if (!handler.requestBodyDef) {
@@ -127,7 +127,7 @@ var HttpTriggerHandler = function () {
                     break;
                   }
 
-                  return _context.abrupt('return', toHttpResponse(new errors.BadRequest(_validationResult.errors), httpStatusCodes.BadRequest));
+                  return _context.abrupt('return', badRequest(_validationResult.errors));
 
                 case 13:
                   _context.next = 15;
@@ -140,7 +140,7 @@ var HttpTriggerHandler = function () {
                 case 19:
                   _context.prev = 19;
                   _context.t0 = _context['catch'](0);
-                  return _context.abrupt('return', toHttpResponse(new errors.InternalServerError({ exception: _context.t0.message, stack: _context.t0.stack }), httpStatusCodes.InternalServerError));
+                  return _context.abrupt('return', internalServerError({ exception: _context.t0.message, stack: _context.t0.stack }));
 
                 case 22:
                 case 'end':
