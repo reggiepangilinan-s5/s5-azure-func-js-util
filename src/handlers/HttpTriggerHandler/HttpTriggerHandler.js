@@ -49,7 +49,7 @@ class HttpTriggerHandler {
           }
         }
         const result = await handler.mainFunction.call(handler.mainFunction, context, req);
-        if (result.customResponse) {
+        if (result.returnResponse) {
           return JSON.stringify(result);
         }
         return toHttpResponse(

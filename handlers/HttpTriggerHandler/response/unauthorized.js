@@ -8,7 +8,8 @@ var _require = require('../../../constants'),
 var toHttpResponse = require('../toHttpResponse');
 
 var response = function response(error) {
-  return toHttpResponse(new errors.Unauthorized(error), httpStatusCodes.Unauthorized);
+  var returnResponse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  return toHttpResponse(new errors.Unauthorized(error), httpStatusCodes.Unauthorized, returnResponse);
 };
 
 module.exports = response;

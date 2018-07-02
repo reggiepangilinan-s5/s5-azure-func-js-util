@@ -6,10 +6,12 @@ var defaultHeaders = {
 
 var toHttpResponse = function toHttpResponse(body, status) {
   var headers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultHeaders;
+  var returnResponse = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   return {
     headers: headers,
     status: status,
-    body: body
+    body: body,
+    returnResponse: returnResponse
   };
 };
 

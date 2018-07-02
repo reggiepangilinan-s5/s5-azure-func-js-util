@@ -8,7 +8,8 @@ var _require = require('../../../constants'),
 var toHttpResponse = require('../toHttpResponse');
 
 var response = function response(error) {
-  return toHttpResponse(new errors.BadRequest(error), httpStatusCodes.BadRequest);
+  var returnResponse = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  return toHttpResponse(new errors.BadRequest(error), httpStatusCodes.BadRequest, returnResponse);
 };
 
 module.exports = response;

@@ -135,19 +135,28 @@ var HttpTriggerHandler = function () {
 
                 case 15:
                   result = _context.sent;
+
+                  if (!result.returnResponse) {
+                    _context.next = 18;
+                    break;
+                  }
+
+                  return _context.abrupt('return', (0, _stringify2.default)(result));
+
+                case 18:
                   return _context.abrupt('return', toHttpResponse((0, _stringify2.default)(result), httpStatusCodes.Ok));
 
-                case 19:
-                  _context.prev = 19;
+                case 21:
+                  _context.prev = 21;
                   _context.t0 = _context['catch'](0);
                   return _context.abrupt('return', internalServerError({ exception: _context.t0.message, stack: _context.t0.stack }));
 
-                case 22:
+                case 24:
                 case 'end':
                   return _context.stop();
               }
             }
-          }, _callee, _this, [[0, 19]]);
+          }, _callee, _this, [[0, 21]]);
         }));
 
         return function (_x, _x2) {
