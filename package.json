@@ -37,11 +37,12 @@
   },
   "homepage": "https://github.com/reggiepangilinan-s5/s5-azure-func-js-util#readme",
   "dependencies": {
-    "azure": "^2.3.1-preview",
+    "azure": "2.3.1-preview",
     "lodash": "4.17.10",
     "node-http-error-objects": "3.0.1"
   },
   "peerDependencies": {
+    "azure": "2.3.1-preview",
     "lodash": "4.17.10",
     "node-http-error-objects": "3.0.1"
   },
