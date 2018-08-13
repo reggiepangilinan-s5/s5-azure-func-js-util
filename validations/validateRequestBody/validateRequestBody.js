@@ -7,7 +7,8 @@ var _keys2 = _interopRequireDefault(_keys);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _require = require('lodash'),
-    isFunction = _require.isFunction;
+    isFunction = _require.isFunction,
+    isNil = _require.isNil;
 
 /**
  * Add to errors list.
@@ -30,7 +31,7 @@ var addReqBodyError = function addReqBodyError(reqBodyErrors, prop, message) {
  * @param {any} item
  */
 var checkifPropExists = function checkifPropExists(reqBodyErrors, item, propValue) {
-  if (item && !propValue) {
+  if (item && isNil(propValue)) {
     addReqBodyError(reqBodyErrors, item.name, 'Property [' + item.name + '] is required.');
   }
 };
@@ -44,7 +45,7 @@ var checkifPropExists = function checkifPropExists(reqBodyErrors, item, propValu
 var invokeValidators = function invokeValidators(item, propValue, reqBodyErrors) {
   var validatorFunction = item.validator;
   if (validatorFunction) {
-    if (isFunction(validatorFunction) && propValue) {
+    if (isFunction(validatorFunction) && !isNil(propValue)) {
       var validatorResult = validatorFunction.call(undefined, propValue);
       // Validators function should always return boolean type
       if (typeof validatorResult !== 'boolean') {

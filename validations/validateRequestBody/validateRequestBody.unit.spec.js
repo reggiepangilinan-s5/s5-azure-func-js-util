@@ -12,7 +12,8 @@ var fakeRequest = {
     vendorId: 'VND001',
     priceFamily: 'PRC001',
     dateFrom: '2018-03-11',
-    dateTo: '2018-03-17'
+    dateTo: '2018-03-17',
+    ignoreThis: 0
   }
 };
 
@@ -25,13 +26,13 @@ var invalidValidatorWithParam = function invalidValidatorWithParam(param) {
 
 describe('utils/validations/validateRequestBody', function () {
   test('Should pass if req body complied with the definition. All required and All Valid Values', function () {
-    var reqBodyDefs = [requestBodyProp('storeId'), requestBodyProp('vendorId'), requestBodyProp('priceFamily'), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', isValidDate)];
+    var reqBodyDefs = [requestBodyProp('storeId'), requestBodyProp('vendorId'), requestBodyProp('priceFamily'), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', isValidDate), requestBodyProp('ignoreThis', null, true)];
     var result = validateRequestBody(fakeRequest, reqBodyDefs);
     expect(result.allValid).toBe(true);
     expect(result.errors.length).toBe(0);
   });
   test('Should fail if req body did not comply with the definition. Invalid validators passed.', function () {
-    var reqBodyDefs = [requestBodyProp('storeid'), requestBodyProp('vendorId', invalidValidatorWithParam), requestBodyProp('priceFamily', invalidValidator), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', invalidValidatorWithParam), requestBodyProp('NONEXISTENT')];
+    var reqBodyDefs = [requestBodyProp('storeid'), requestBodyProp('vendorId', invalidValidatorWithParam), requestBodyProp('priceFamily', invalidValidator), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', invalidValidatorWithParam), requestBodyProp('ignoreThis', null, false), requestBodyProp('NONEXISTENT')];
     var result = validateRequestBody(fakeRequest, reqBodyDefs);
     expect(result.allValid).toBe(false);
     expect(result.errors.length).toBe(5);

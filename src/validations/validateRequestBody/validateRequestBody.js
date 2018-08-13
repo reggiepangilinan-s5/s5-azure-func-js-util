@@ -1,4 +1,4 @@
-const { isFunction } = require('lodash');
+const { isFunction, isNil } = require('lodash');
 
 /**
  * Add to errors list.
@@ -19,7 +19,7 @@ const addReqBodyError = (reqBodyErrors, prop, message) => {
  * @param {any} item
  */
 const checkifPropExists = (reqBodyErrors, item, propValue) => {
-  if (item && !propValue) {
+  if (item && isNil(propValue)) {
     addReqBodyError(reqBodyErrors, item.name, `Property [${item.name}] is required.`);
   }
 };
@@ -33,7 +33,7 @@ const checkifPropExists = (reqBodyErrors, item, propValue) => {
 const invokeValidators = (item, propValue, reqBodyErrors) => {
   const validatorFunction = item.validator;
   if (validatorFunction) {
-    if (isFunction(validatorFunction) && propValue) {
+    if (isFunction(validatorFunction) && !isNil(propValue)) {
       const validatorResult = validatorFunction.call(this, propValue);
       // Validators function should always return boolean type
       if (typeof (validatorResult) !== 'boolean') {
