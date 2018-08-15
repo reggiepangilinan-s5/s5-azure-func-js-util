@@ -1,4 +1,4 @@
-const { isFunction, isNil } = require('lodash');
+const { isFunction, isNil, isArray } = require('lodash');
 
 /**
  * Add to errors list.
@@ -48,6 +48,57 @@ const invokeValidators = (item, propValue, reqBodyErrors) => {
   }
 };
 
+const handleNonArrayRequestBody = (reqbodydefs, req) => {
+  const reqBodyErrors = [];
+  Object.keys(reqbodydefs)
+    .forEach((index) => {
+      const item = reqbodydefs[index];
+      const propValue = req.body[item.name];
+      const { nullable } = item;
+      if (nullable) {
+        return;
+      }
+      // Validate if prop has value
+      checkifPropExists(reqBodyErrors, item, propValue);
+      // Invoke validator function if there is one provided
+      invokeValidators(item, propValue, reqBodyErrors);
+    });
+  return {
+    allValid: reqBodyErrors.length <= 0,
+    errors: reqBodyErrors,
+  };
+};
+
+
+const handleArrayRequestBody = (req, reqbodydefs) => {
+  const errors = req.body.map((item, itemIndex) => {
+    const reqBodyErrors = [];
+    Object.keys(reqbodydefs)
+      .forEach((index) => {
+        const definition = reqbodydefs[index];
+        const propValue = item[definition.name];
+        const { nullable } = definition;
+        if (nullable) {
+          return;
+        }
+        // Validate if prop has value
+        checkifPropExists(reqBodyErrors, definition, propValue);
+        // Invoke validator function if there is one provided
+        invokeValidators(definition, propValue, reqBodyErrors);
+      });
+    return {
+      itemIndex,
+      itemErrors: reqBodyErrors,
+    };
+  });
+
+  return {
+    allValid: errors.filter(x => x.itemErrors.length > 0).length <= 0,
+    errors,
+  };
+};
+
+
 /**
  * Validate request body based on the definition
  * @param {any} req
@@ -71,25 +122,16 @@ const invokeValidators = (item, propValue, reqBodyErrors) => {
  * }
  */
 const validateRequestBody = (req, reqbodydefs) => {
-  const reqBodyErrors = [];
-  Object.keys(reqbodydefs)
-    .forEach((index) => {
-      const item = reqbodydefs[index];
-      const propValue = req.body[item.name];
-      const { nullable } = item;
-      if (nullable) {
-        return;
-      }
-      // Validate if prop has value
-      checkifPropExists(reqBodyErrors, item, propValue);
-      // Invoke validator function if there is one provided
-      invokeValidators(item, propValue, reqBodyErrors);
-    });
-  return {
-    allValid: reqBodyErrors.length <= 0,
-    errors: reqBodyErrors,
-  };
+  if (isNil(req.body)) {
+    return {
+      allValid: false,
+      errors: ['Please pass a request body.'],
+    };
+  }
+  if (!isArray(req.body)) {
+    return handleNonArrayRequestBody(reqbodydefs, req);
+  }
+  return handleArrayRequestBody(req, reqbodydefs);
 };
 
 module.exports = validateRequestBody;
-

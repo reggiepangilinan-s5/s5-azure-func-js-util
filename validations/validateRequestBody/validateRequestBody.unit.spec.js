@@ -18,6 +18,26 @@ var fakeRequest = {
   }
 };
 
+var fakeRequestArray = {
+  body: [{
+    storeId: 'STR001',
+    vendorId: 'VND001',
+    priceFamily: 'PRC001',
+    dateFrom: '2018-03-11',
+    dateTo: '2018-03-17',
+    ignoreThis: 0,
+    ignoreThisToo: null
+  }, {
+    storeId: 'STR002',
+    vendorId: 'VND002',
+    priceFamily: 'PRC002',
+    dateFrom: '2018-03-11',
+    dateTo: '2018-03-17',
+    ignoreThis: 0,
+    ignoreThisToo: null
+  }]
+};
+
 var invalidValidator = function invalidValidator() {
   return 1 + 1;
 };
@@ -37,6 +57,31 @@ describe('utils/validations/validateRequestBody', function () {
     var result = validateRequestBody(fakeRequest, reqBodyDefs);
     expect(result.allValid).toBe(false);
     expect(result.errors.length).toBe(5);
+  });
+
+  test('Should fail if req body is not passed', function () {
+    var reqBodyDefs = [requestBodyProp('storeid'), requestBodyProp('vendorId', invalidValidatorWithParam), requestBodyProp('priceFamily', invalidValidator), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', invalidValidatorWithParam), requestBodyProp('ignoreThis', null, false), requestBodyProp('ignoreThisToo', null, true), requestBodyProp('NONEXISTENT')];
+    var result = validateRequestBody({ body: null }, reqBodyDefs);
+    expect(result.allValid).toBe(false);
+    expect(result.errors.length).toBe(1);
+  });
+
+  test('Should fail if req body is empty', function () {
+    var reqBodyDefs = [requestBodyProp('storeid'), requestBodyProp('vendorId', invalidValidatorWithParam), requestBodyProp('priceFamily', invalidValidator), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', invalidValidatorWithParam), requestBodyProp('ignoreThis', null, false), requestBodyProp('ignoreThisToo', null, true), requestBodyProp('NONEXISTENT')];
+    var result = validateRequestBody({ body: {} }, reqBodyDefs);
+    expect(result.allValid).toBe(false);
+  });
+
+  test('Should pass if req body array complied with the definition. All required and All Valid Values', function () {
+    var reqBodyDefs = [requestBodyProp('storeId'), requestBodyProp('vendorId'), requestBodyProp('priceFamily'), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', isValidDate), requestBodyProp('ignoreThis', null, true), requestBodyProp('ignoreThisToo', null, true)];
+    var result = validateRequestBody(fakeRequestArray, reqBodyDefs);
+    expect(result.allValid).toBe(true);
+  });
+
+  test('Should fail if req body did not comply with the definition. Invalid validators passed.', function () {
+    var reqBodyDefs = [requestBodyProp('storeid'), requestBodyProp('vendorId', invalidValidatorWithParam), requestBodyProp('priceFamily', invalidValidator), requestBodyProp('dateFrom', isValidDate), requestBodyProp('dateTo', invalidValidatorWithParam), requestBodyProp('ignoreThis', null, false), requestBodyProp('ignoreThisToo', null, true), requestBodyProp('NONEXISTENT')];
+    var result = validateRequestBody(fakeRequestArray, reqBodyDefs);
+    expect(result.allValid).toBe(false);
   });
 });
 //# sourceMappingURL=validateRequestBody.unit.spec.js.map

@@ -115,14 +115,12 @@ module.exports = new HttpTriggerHandler()
 
 ### Request Body Definition
 
-The shape of the request body object.
+The shape of the request body object. If an `Array` of object is passed in as a request body all items should comply with the request body definition. Each item will be evaluated and all errors for each item will returned if there is any.
 
 `requestBodyProp` accepts the following parameters
  - property name
  - (optional) validator function, any function that returns a `boolean`. This will be evaluated automatically in the pipeline.
 - (optional) nullable property `true` or `false`, when this is set to `true` validator  function will not be evaluated.
-
- *All properties in a request body are required*
 
 ```
 const { isNumber } = require('lodash');
@@ -143,6 +141,13 @@ const reqBodyDef = [
 
 module.exports = reqBodyDef;
 ```
+
+ *All properties in a request body are required by default but can be overriden if needed. Just pass a `null` validator and set nullable param to `true`*
+
+```
+requestBodyProp('propertyName', null, true)
+```
+
 
 Then hook it to the pipeline
 
