@@ -10,6 +10,7 @@ const fakeRequest = {
     dateFrom: '2018-03-11',
     dateTo: '2018-03-17',
     ignoreThis: 0,
+    ignoreThisToo: null,
   },
 };
 
@@ -25,6 +26,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', isValidDate),
       requestBodyProp('ignoreThis', null, true),
+      requestBodyProp('ignoreThisToo', null, true),
     ];
     const result = validateRequestBody(fakeRequest, reqBodyDefs);
     expect(result.allValid).toBe(true);
@@ -38,6 +40,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', invalidValidatorWithParam),
       requestBodyProp('ignoreThis', null, false),
+      requestBodyProp('ignoreThisToo', null, true),
       requestBodyProp('NONEXISTENT'),
     ];
     const result = validateRequestBody(fakeRequest, reqBodyDefs);

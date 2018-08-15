@@ -76,6 +76,10 @@ const validateRequestBody = (req, reqbodydefs) => {
     .forEach((index) => {
       const item = reqbodydefs[index];
       const propValue = req.body[item.name];
+      const { nullable } = item;
+      if (nullable) {
+        return;
+      }
       // Validate if prop has value
       checkifPropExists(reqBodyErrors, item, propValue);
       // Invoke validator function if there is one provided

@@ -87,6 +87,11 @@ var validateRequestBody = function validateRequestBody(req, reqbodydefs) {
   (0, _keys2.default)(reqbodydefs).forEach(function (index) {
     var item = reqbodydefs[index];
     var propValue = req.body[item.name];
+    var nullable = item.nullable;
+
+    if (nullable) {
+      return;
+    }
     // Validate if prop has value
     checkifPropExists(reqBodyErrors, item, propValue);
     // Invoke validator function if there is one provided
