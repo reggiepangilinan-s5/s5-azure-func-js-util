@@ -120,6 +120,7 @@ The shape of the request body object.
 `requestBodyProp` accepts the following parameters
  - property name
  - (optional) validator function, any function that returns a `boolean`. This will be evaluated automatically in the pipeline.
+- (optional) nullable property `true` or `false`, when this is set to `true` validator  function will not be evaluated.
 
  *All properties in a request body are required*
 
