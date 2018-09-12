@@ -142,7 +142,7 @@ const reqBodyDef = [
 module.exports = reqBodyDef;
 ```
 
- *All properties in a request body are required by default but can be overriden if needed. Just pass a `null` validator and set nullable param to `true`*
+ *All properties in a request body are required by default but can be overriden if needed. Just pass a `null` validator and set nullable param to `true`. If you specify a validator with `nullable: true` the validator will run and also validate potentially `null` values.*
 
 ```
 requestBodyProp('propertyName', null, true)
