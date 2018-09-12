@@ -42,6 +42,7 @@
     "azure-arm-documentdb": "1.0.3-preview",
     "azure-search": "0.0.21",
     "lodash": "4.17.10",
+    "moment": "2.22.2",
     "node-http-error-objects": "3.0.1"
   },
   "devDependencies": {

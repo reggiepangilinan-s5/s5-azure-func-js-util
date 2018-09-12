@@ -1,6 +1,6 @@
+const moment = require('moment');
 const validateRequestBody = require('./validateRequestBody');
 const requestBodyProp = require('./requestBodyProp');
-const { isValidDate } = require('../../validations');
 
 const fakeRequest = {
   body: {
@@ -9,7 +9,7 @@ const fakeRequest = {
     priceFamily: 'PRC001',
     dateFrom: '2018-03-11',
     dateTo: '2018-03-17',
-    ignoreThis: 0,
+    zeroValue: 0,
     ignoreThisToo: null,
   },
 };
@@ -22,7 +22,7 @@ const fakeRequestArray = {
       priceFamily: 'PRC001',
       dateFrom: '2018-03-11',
       dateTo: '2018-03-17',
-      ignoreThis: 0,
+      zeroValue: 0,
       ignoreThisToo: null,
     },
     {
@@ -31,13 +31,14 @@ const fakeRequestArray = {
       priceFamily: 'PRC002',
       dateFrom: '2018-03-11',
       dateTo: '2018-03-17',
-      ignoreThis: 0,
+      zeroValue: 0,
       ignoreThisToo: null,
     },
   ],
 };
 
-
+const zeroValueValidator = value => value >= 0;
+const isValidDate = date => moment(date, 'YYYY-MM-DD').isValid();
 const invalidValidator = () => 1 + 1;
 const invalidValidatorWithParam = param => `${param} notboolean`;
 
@@ -49,7 +50,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('priceFamily'),
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', isValidDate),
-      requestBodyProp('ignoreThis', null, true),
+      requestBodyProp('zeroValue', zeroValueValidator, true),
       requestBodyProp('ignoreThisToo', null, true),
     ];
     const result = validateRequestBody(fakeRequest, reqBodyDefs);
@@ -63,7 +64,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('priceFamily', invalidValidator),
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', invalidValidatorWithParam),
-      requestBodyProp('ignoreThis', null, false),
+      requestBodyProp('zeroValue', zeroValueValidator, true),
       requestBodyProp('ignoreThisToo', null, true),
       requestBodyProp('NONEXISTENT'),
     ];
@@ -79,7 +80,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('priceFamily', invalidValidator),
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', invalidValidatorWithParam),
-      requestBodyProp('ignoreThis', null, false),
+      requestBodyProp('zeroValue', null, false),
       requestBodyProp('ignoreThisToo', null, true),
       requestBodyProp('NONEXISTENT'),
     ];
@@ -95,7 +96,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('priceFamily', invalidValidator),
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', invalidValidatorWithParam),
-      requestBodyProp('ignoreThis', null, false),
+      requestBodyProp('zeroValue', null, false),
       requestBodyProp('ignoreThisToo', null, true),
       requestBodyProp('NONEXISTENT'),
     ];
@@ -110,7 +111,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('priceFamily'),
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', isValidDate),
-      requestBodyProp('ignoreThis', null, true),
+      requestBodyProp('zeroValue', zeroValueValidator, true),
       requestBodyProp('ignoreThisToo', null, true),
     ];
     const result = validateRequestBody(fakeRequestArray, reqBodyDefs);
@@ -124,7 +125,7 @@ describe('utils/validations/validateRequestBody', () => {
       requestBodyProp('priceFamily', invalidValidator),
       requestBodyProp('dateFrom', isValidDate),
       requestBodyProp('dateTo', invalidValidatorWithParam),
-      requestBodyProp('ignoreThis', null, false),
+      requestBodyProp('zeroValue', zeroValueValidator, false),
       requestBodyProp('ignoreThisToo', null, true),
       requestBodyProp('NONEXISTENT'),
     ];
